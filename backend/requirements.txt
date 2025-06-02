@@ -1,0 +1,8 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+llama-index-core==0.10.57
+llama-index-llms-ollama==0.1.5
+llama-index-embeddings-ollama==0.1.2
+llama-index-embeddings-huggingface==0.2.2
+python-multipart==0.0.6
+pydantic==2.5.0
