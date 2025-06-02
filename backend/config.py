@@ -8,7 +8,8 @@ class Config:
     OLLAMA_EMBEDDING_MODEL = os.getenv("OLLAMA_EMBEDDING_MODEL", "nomic-embed-text")
     
     # DBT project configuration
-    DBT_PROJECT_PATH = os.getenv("DBT_PROJECT_PATH", "./dbt_project")
+    DBT_PROJECT_PATH='/Users/marquein/adsk_git_repos/adp-astro-eda/dags/dbt/access/assignment'
+    # DBT_PROJECT_PATH = os.getenv("DBT_PROJECT_PATH", "./dbt_project")
     DBT_DOCS_PATH = os.getenv("DBT_DOCS_PATH", "./dbt_project/target/compiled")
     
     # Server configuration
