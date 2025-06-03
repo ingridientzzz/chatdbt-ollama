@@ -27,13 +27,16 @@ class DBTProjectLoader:
         return documents
     
     def _load_sql_models(self) -> List[Document]:
-        """Load SQL model files"""
+        """Load SQL model files, excluding 'elementary' folder"""
         documents = []
         
         if not self.compiled_sql_path.exists():
             return documents
 
         for sql_file in self.compiled_sql_path.rglob("*.sql"):
+            # Exclude files in any 'elementary' subfolder
+            if "elementary" in sql_file.parts:
+                continue
             try:
                 with open(sql_file, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -109,22 +112,25 @@ class DBTProjectLoader:
 
             # Process models and other nodes
             for node in nodes.values():
-                name = node.get("name", "unknown")
-                alias = node.get("alias", name)
-                description = node.get("description", "")
-                depends_on = node.get("depends_on", {}).get("nodes", [])
-                resource_type = node.get("resource_type", "")
-                compiled_sql = node.get("compiled_code", "")
+                if "elementary" not in node and "elementary" not in node.get("alias", "") and "elementary" not in node.get("description", "") and "elementary" not in node.get("compiled_code", ""):
+                    name = node.get("name", "unknown")
+                    alias = node.get("alias", name)
+                    description = node.get("description", "")
+                    depends_on = node.get("depends_on", {}).get("nodes", [])
+                    resource_type = node.get("resource_type", "")
+                    compiled_sql = node.get("compiled_code", "")
 
-                text = f"Node_Name: {name}\nAlias: {alias}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on}\nCompiled_SQL:\n{compiled_sql}"
-                doc = Document(
-                    text=text,
-                    metadata={
-                        "resource_type": resource_type,
-                        "project_file": "dbt_manifest"
-                    }
-                )
-                documents.append(doc)
+                    depends_on_list = [d for d in depends_on if "elementary" not in d]
+
+                    text = f"Node_Name: {name}\nAlias: {alias}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on_list}\nCompiled_SQL:\n{compiled_sql}"
+                    doc = Document(
+                        text=text,
+                        metadata={
+                            "resource_type": resource_type,
+                            "project_file": "dbt_manifest"
+                        }
+                    )
+                    documents.append(doc)
 
             # Process sources
             for source in sources.values():
