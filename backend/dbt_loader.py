@@ -60,8 +60,13 @@ class DBTProjectLoader:
     def _load_schema_files(self) -> List[Document]:
         """Load YAML schema files"""
         documents = []
-        
+
         for yml_file in self.project_path.rglob("*.yml"):
+            # Exclude any .yml files found under the "target/compiled" directory
+            if not yml_file.is_file():
+                print(f"Skipping directory: {yml_file}")
+                continue
+
             try:
                 with open(yml_file, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -82,7 +87,7 @@ class DBTProjectLoader:
                 
             except Exception as e:
                 print(f"Error loading YAML file {yml_file}: {e}")
-                
+
         return documents
     
     def _load_docs_files(self) -> List[Document]:
