@@ -3,25 +3,26 @@ import yaml
 from pathlib import Path
 from typing import List, Dict, Any
 from llama_index.core import Document
+import json
 
 class DBTProjectLoader:
     def __init__(self, project_path: str):
         self.project_path = Path(project_path)
-        self.models_path = self.project_path / "models"
-        self.docs_path = self.project_path / "target" / "compiled"
-        
+        self.compiled_sql_path = self.project_path / "target" / "compiled"
+        self.manifest_path = self.project_path / "target" / "manifest.json"
+
     def load_dbt_files(self) -> List[Document]:
         """Load DBT project files and convert to LlamaIndex documents"""
         documents = []
         
         # Load model files (.sql)
         documents.extend(self._load_sql_models())
-        
-        # Load schema files (.yml)
-        documents.extend(self._load_schema_files())
-        
-        # Load documentation files
-        documents.extend(self._load_docs_files())
+
+        # Load YAML files (.yml)
+        documents.extend(self._load_yaml_files())
+
+        # Load manifest file
+        documents.extend(self._load_manifest_file())
         
         return documents
     
@@ -29,16 +30,16 @@ class DBTProjectLoader:
         """Load SQL model files"""
         documents = []
         
-        if not self.models_path.exists():
+        if not self.compiled_sql_path.exists():
             return documents
-            
-        for sql_file in self.models_path.rglob("*.sql"):
+
+        for sql_file in self.compiled_sql_path.rglob("*.sql"):
             try:
                 with open(sql_file, 'r', encoding='utf-8') as f:
                     content = f.read()
                 
                 # Extract model name from file path
-                relative_path = sql_file.relative_to(self.models_path)
+                relative_path = sql_file.relative_to(self.compiled_sql_path)
                 model_name = str(relative_path).replace('.sql', '').replace('/', '.')
                 
                 doc = Document(
@@ -47,7 +48,7 @@ class DBTProjectLoader:
                         "file_path": str(sql_file),
                         "file_type": "sql_model",
                         "model_name": model_name,
-                        "source": "dbt_model"
+                        "project_file": "dbt_model"
                     }
                 )
                 documents.append(doc)
@@ -57,7 +58,8 @@ class DBTProjectLoader:
                 
         return documents
     
-    def _load_schema_files(self) -> List[Document]:
+
+    def _load_yaml_files(self) -> List[Document]:
         """Load YAML schema files"""
         documents = []
 
@@ -79,8 +81,8 @@ class DBTProjectLoader:
                     text=text_content,
                     metadata={
                         "file_path": str(yml_file),
-                        "file_type": "schema",
-                        "source": "dbt_schema"
+                        "file_type": "yaml",
+                        "project_file": "dbt_yaml"
                     }
                 )
                 documents.append(doc)
@@ -90,32 +92,60 @@ class DBTProjectLoader:
 
         return documents
     
-    def _load_docs_files(self) -> List[Document]:
-        """Load compiled documentation files"""
+    def _load_manifest_file(self) -> List[Document]:
+        """Load manifest.json from the target directory and extract DBT documentation"""
         documents = []
-        
-        if not self.docs_path.exists():
+
+        if not self.manifest_path.exists():
             return documents
-            
-        for doc_file in self.docs_path.rglob("*.sql"):
-            try:
-                with open(doc_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                
+
+        try:
+            with open(self.manifest_path, 'r', encoding='utf-8') as f:
+                manifest = json.load(f)
+
+            # Extract nodes (models, sources, etc.) from manifest
+            nodes = manifest.get("nodes", {})
+            sources = manifest.get("sources", {})
+
+            # Process models and other nodes
+            for node in nodes.values():
+                name = node.get("name", "unknown")
+                description = node.get("description", "")
+                depends_on = node.get("depends_on", {}).get("nodes", [])
+                resource_type = node.get("resource_type", "")
+
+                text = f"Name: {name}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on}"
                 doc = Document(
-                    text=content,
+                    text=text,
                     metadata={
-                        "file_path": str(doc_file),
-                        "file_type": "compiled_sql",
-                        "source": "dbt_compiled"
+                        "source": resource_type,
+                        "project_file": "dbt_manifest"
                     }
                 )
                 documents.append(doc)
-                
-            except Exception as e:
-                print(f"Error loading compiled file {doc_file}: {e}")
-                
+
+            # Process sources
+            for source in sources.values():
+                name = source.get("name", "unknown")
+                description = source.get("description", "")
+                table_name = source.get("relation_name", "")
+                resource_type = source.get("resource_type", "")
+
+                text = f"Source: {name}\nTable: {table_name}\nType: {resource_type}\nDescription: {description}"
+                doc = Document(
+                    text=text,
+                    metadata={
+                        "source": resource_type,
+                        "project_file": "dbt_manifest"
+                    }
+                )
+                documents.append(doc)
+
+        except Exception as e:
+            print(f"Error loading manifest.json: {e}")
+
         return documents
+
     
     def _yaml_to_text(self, yaml_content: Dict[Any, Any], filename: str) -> str:
         """Convert YAML content to readable text"""

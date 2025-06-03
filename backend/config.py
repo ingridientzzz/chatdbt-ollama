@@ -14,7 +14,7 @@ class Config:
     DBT_DOCS_PATH = os.getenv("DBT_DOCS_PATH")
 
     # Server configuration
-    HOST = os.getenv("HOST", "0.0.0.0")s
+    HOST = os.getenv("HOST", "0.0.0.0")
     PORT = int(os.getenv("PORT", 8000))
     
     # Index storage
