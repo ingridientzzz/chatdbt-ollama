@@ -110,15 +110,17 @@ class DBTProjectLoader:
             # Process models and other nodes
             for node in nodes.values():
                 name = node.get("name", "unknown")
+                alias = node.get("alias", name)
                 description = node.get("description", "")
                 depends_on = node.get("depends_on", {}).get("nodes", [])
                 resource_type = node.get("resource_type", "")
+                compiled_sql = node.get("compiled_code", "")
 
-                text = f"Name: {name}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on}"
+                text = f"Node_Name: {name}\nAlias: {alias}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on}\nCompiled_SQL:\n{compiled_sql}"
                 doc = Document(
                     text=text,
                     metadata={
-                        "source": resource_type,
+                        "resource_type": resource_type,
                         "project_file": "dbt_manifest"
                     }
                 )
@@ -135,7 +137,7 @@ class DBTProjectLoader:
                 doc = Document(
                     text=text,
                     metadata={
-                        "source": resource_type,
+                        "resource_type": resource_type,
                         "project_file": "dbt_manifest"
                     }
                 )

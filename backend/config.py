@@ -5,9 +5,9 @@ class Config:
 
     load_dotenv()
     # Ollama configuration
-    OLLAMA_HOST = os.getenv("OLLAMA_HOST")
-    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
-    OLLAMA_EMBEDDING_MODEL = os.getenv("OLLAMA_EMBEDDING_MODEL")
+    OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:4b")
+    OLLAMA_EMBEDDING_MODEL = os.getenv("OLLAMA_EMBEDDING_MODEL", "nomic-embed-text")
 
     # DBT project configuration
     DBT_PROJECT_PATH = os.getenv("DBT_PROJECT_PATH")
