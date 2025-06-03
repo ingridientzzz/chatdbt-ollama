@@ -1,4 +1,4 @@
-/backend/storage/*
+/backend/storage/
 /backend/__pycache__/
 /frontend/node_modules/
 /frontend/.next
