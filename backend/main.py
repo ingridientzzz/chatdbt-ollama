@@ -61,7 +61,7 @@ def initialize_llama_index():
         # Set global settings
         Settings.llm = llm
         Settings.embed_model = embed_model
-        Settings.chunk_size = 1024
+        Settings.chunk_size = 1024  # might want to expose this to .env change there faster
         Settings.chunk_overlap = 20
         
         # Try to load existing index
