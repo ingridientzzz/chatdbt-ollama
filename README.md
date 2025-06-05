@@ -51,6 +51,11 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     ```bash
     uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     ```
+    Backend is running if you see this output:
+    ```bash
+    INFO:     Application startup complete.
+    INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+    ```
 
 5. **Run the frontend server:**
     On first run:

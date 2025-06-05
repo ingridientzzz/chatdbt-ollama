@@ -128,7 +128,7 @@ class DBTProjectLoader:
                         text=text,
                         metadata={
                             "resource_type": resource_type,
-                            "project_file": "dbt_manifest"
+                            "project_file": "nodes"
                         }
                     )
                     documents.append(doc)
@@ -145,7 +145,7 @@ class DBTProjectLoader:
                     text=text,
                     metadata={
                         "resource_type": resource_type,
-                        "project_file": "dbt_manifest"
+                        "project_file": "sources"
                     }
                 )
                 documents.append(doc)
