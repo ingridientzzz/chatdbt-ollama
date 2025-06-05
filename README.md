@@ -14,7 +14,7 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
 
     Pull the required models
     ```bash
-    ollama pull llama2          # or mistral, codellama, etc.
+    ollama pull llama3.2:3b          # or mistral, codellama, etc.
     ollama pull nomic-embed-text  # for embeddings
     ```
 
