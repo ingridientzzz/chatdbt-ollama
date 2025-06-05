@@ -101,7 +101,7 @@ def initialize_llama_index():
             )
         )
         
-        print("LlamaIndex initialized successfully!")
+        print("LlamaIndex initialized successfully.")
         
     except Exception as e:
         print(f"Error initializing LlamaIndex: {e}")
@@ -114,7 +114,7 @@ async def startup_event():
 
 @app.get("/")
 async def root():
-    return {"message": "ChatDBT with Ollama API is running!"}
+    return {"message": "ChatDBT with Ollama API is running."}
 
 @app.get("/health")
 async def health_check():
@@ -188,7 +188,10 @@ async def refresh_index():
             index.as_retriever(similarity_top_k=5),
             system_message=(
                 "You are a helpful assistant specialized in dbt (data build tool) projects. "
-                "You can help users understand their data models, transformations, and documentation."
+                "You can help users understand their data models, transformations, and documentation. "
+                "When answering questions, provide specific information about the dbt models, "
+                "their relationships, and how they transform data. "
+                "If you reference specific files or models, mention their names clearly."
             )
         )
         
