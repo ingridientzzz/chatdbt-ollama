@@ -5,6 +5,9 @@ from typing import List, Dict, Any
 from llama_index.core import Document
 import json
 
+# some projects may have different description structure for models and columns, 
+# try improving _load_manifest_file or expand to get all related information
+
 class DBTProjectLoader:
     def __init__(self, project_path: str):
         self.project_path = Path(project_path)
