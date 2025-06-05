@@ -119,11 +119,11 @@ class DBTProjectLoader:
                     description = node.get("description", "")
                     depends_on = node.get("depends_on", {}).get("nodes", [])
                     resource_type = node.get("resource_type", "")
-                    compiled_sql = node.get("compiled_code", "")
+                    raw_code = node.get("raw_code", "")
 
                     depends_on_list = [d for d in depends_on if "elementary" not in d]
 
-                    text = f"Node_Name: {name}\nAlias: {alias}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on_list}\nCompiled_SQL:\n{compiled_sql}"
+                    text = f"Node_Name: {name}\nAlias: {alias}\nType: {resource_type}\nDescription: {description}\nDependencies:\n{depends_on_list}\nRaw_SQL:\n{raw_code}"
                     doc = Document(
                         text=text,
                         metadata={
