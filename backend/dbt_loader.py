@@ -71,7 +71,7 @@ class DBTProjectLoader:
             if not yml_file.is_file():
                 print(f"Skipping {yml_file}: is a directory, not a file.")
                 continue
-            if "mkdocs" in yml_file.parts or "elementary" in yml_file.parts:
+            if "eio_documentation" in yml_file.parts or "elementary" in yml_file.parts:
                 print(f"Skipping {yml_file}: not core project directories")
                 continue
 
