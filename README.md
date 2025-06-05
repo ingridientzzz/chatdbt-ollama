@@ -30,7 +30,6 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
 
     ```ini
     DBT_PROJECT_PATH=path/to/your/dbt/project
-    DBT_DOCS_PATH=path/to/your/dbt/docs
 
     OLLAMA_HOST=http://localhost:11434
     OLLAMA_MODEL=llama3.2:3b
