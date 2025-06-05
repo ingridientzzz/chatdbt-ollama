@@ -6,7 +6,7 @@ class Config:
     load_dotenv()
     # Ollama configuration - get env variables or use defaults
     OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:4b")
     OLLAMA_EMBEDDING_MODEL = os.getenv("OLLAMA_EMBEDDING_MODEL", "nomic-embed-text")
 
     # DBT project configuration

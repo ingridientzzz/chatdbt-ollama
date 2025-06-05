@@ -15,7 +15,7 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
 
     Pull the required models
     ```bash
-    ollama pull llama3.2:3b          # or mistral, codellama, etc.
+    ollama pull qwen3:4b          # or mistral, codellama, etc.
     ollama pull nomic-embed-text  # for embeddings
     ```
 
@@ -33,7 +33,7 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     DBT_PROJECT_PATH=path/to/your/dbt/project
 
     OLLAMA_HOST=http://localhost:11434
-    OLLAMA_MODEL=llama3.2:3b
+    OLLAMA_MODEL=qwen3:4b
     OLLAMA_EMBEDDING_MODEL=nomic-embed-text
 
     HOST=0.0.0.0
@@ -73,7 +73,7 @@ All configuration is handled through environment variables:
 
 - `DBT_PROJECT_PATH`: Path to your dbt project (required)
 - `OLLAMA_HOST`: Ollama server URL (default: http://localhost:11434)
-- `OLLAMA_MODEL`: Ollama model to use (default: llama3.2:3b)
+- `OLLAMA_MODEL`: Ollama model to use (default: qwen3:4b)
 - `OLLAMA_EMBEDDING_MODEL`: Embedding model (default: nomic-embed-text)
 - `INDEX_STORAGE_PATH`: Where to store the vector index (default: `/backend/storage`)
 - `HOST`: Server host (default: 0.0.0.0)
