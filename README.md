@@ -61,10 +61,10 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     On first run:
     ```bash
     cd frontend
-    npm install
+    npm install && npm run dev
     ```
 
-    Then run the server itself:
+    Or, for consecutive runs, simply run the server itself:
     ```bash
     npm run dev
     ```
