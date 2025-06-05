@@ -69,17 +69,18 @@ class DBTProjectLoader:
         for yml_file in self.project_path.rglob("*.yml"):
             # Exclude any .yml files found under the "target/compiled" directory
             if not yml_file.is_file():
-                print(f"Skipping directory: {yml_file}")
+                print(f"Skipping {yml_file}: is a directory, not a file.")
+                continue
+            if "mkdocs" in yml_file.parts or "elementary" in yml_file.parts:
+                print(f"Skipping {yml_file}: not core project directories")
                 continue
 
             try:
                 with open(yml_file, 'r', encoding='utf-8') as f:
                     content = f.read()
                     yaml_content = yaml.safe_load(content)
-                
                 # Convert YAML to readable text
                 text_content = self._yaml_to_text(yaml_content, yml_file.name)
-                
                 doc = Document(
                     text=text_content,
                     metadata={
