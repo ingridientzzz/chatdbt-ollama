@@ -64,6 +64,10 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     npm run dev
     ```
 
+    Open [http://localhost:3000](http://localhost:3000)
+    Tip: Just refresh or reload the tab if it says not connected.
+
+
 **Configuration**
 All configuration is handled through environment variables:
 
