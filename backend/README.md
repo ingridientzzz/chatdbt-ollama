@@ -17,10 +17,18 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     ```
 
 3. **Set environment variables:**
-    ```bash
-    export DBT_PROJECT_PATH="/path/to/your/dbt/project"
-    export OLLAMA_MODEL="llama2"  # or your preferred model
-    export OLLAMA_EMBEDDING_MODEL="nomic-embed-text"
+    Create `.env` file in `/backend` by copying `.env.example` 
+
+    ```ini
+    DBT_PROJECT_PATH=path/to/your/dbt/project
+    DBT_DOCS_PATH=path/to/your/dbt/docs
+
+    OLLAMA_HOST=http://localhost:11434
+    OLLAMA_MODEL=qwen3:4b
+    OLLAMA_EMBEDDING_MODEL=nomic-embed-text
+
+    HOST=0.0.0.0
+    PORT=8000
     ```
 
 
@@ -45,7 +53,7 @@ All configuration is handled through environment variables:
 - `HOST`: Server host (default: 0.0.0.0)
 - `PORT`: Server port (default: 8000)
 
-**API Endpoints**
+**Endpoints**
 
 - `GET /`: Health check
 - `GET /health`: Detailed health status
@@ -60,8 +68,9 @@ All configuration is handled through environment variables:
 
 2. No documents found:
     Verify `DBT_PROJECT_PATH` points to a valid dbt project
-    Ensure the project has models in the `models/` directory
+    Ensure the project is compiled or has the `/target` folder populated
+    Tip: Run `dbt docs generate`
 
 3. Memory issues:
-    - Try smaller models like `llama2:7b` instead of larger ones
+    - Smaller models like `llama2:7b` - depends on the machine
     - Reduce `chunk_size` in the configuration
