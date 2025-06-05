@@ -65,7 +65,9 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     ```
 
     Open [http://localhost:3000](http://localhost:3000)
-    Tip: Just refresh or reload the tab if it says not connected.
+
+    Tip: 
+    If you encounter: `Cannot connect to backend. Make sure Ollama is running and the backend server is started.`, then just refresh or reload the tab if it says not connected.
 
 
 **Configuration**
