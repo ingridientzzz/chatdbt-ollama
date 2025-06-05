@@ -68,7 +68,7 @@ All configuration is handled through environment variables:
 
 - `DBT_PROJECT_PATH`: Path to your dbt project (required)
 - `OLLAMA_HOST`: Ollama server URL (default: http://localhost:11434)
-- `OLLAMA_MODEL`: Ollama model to use (default: llama2)
+- `OLLAMA_MODEL`: Ollama model to use (default: llama3.2:3b)
 - `OLLAMA_EMBEDDING_MODEL`: Embedding model (default: nomic-embed-text)
 - `INDEX_STORAGE_PATH`: Where to store the vector index (default: `/backend/storage`)
 - `HOST`: Server host (default: 0.0.0.0)
