@@ -80,6 +80,8 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     Tip: 
     If you encounter: `Cannot connect to backend. Make sure Ollama is running and the backend server is started.`, then just refresh or reload the tab if it says not connected.
 
+    Click on `Refresh` to recreate Vector store
+
 
 **Configuration**
 All configuration is handled through environment variables:
