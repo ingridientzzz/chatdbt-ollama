@@ -11,7 +11,6 @@ class Config:
 
     # DBT project configuration
     DBT_PROJECT_PATH = os.getenv("DBT_PROJECT_PATH")
-    DBT_DOCS_PATH = os.getenv("DBT_DOCS_PATH")
 
     # Server configuration
     HOST = os.getenv("HOST", "0.0.0.0")

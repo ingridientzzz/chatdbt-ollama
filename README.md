@@ -7,6 +7,7 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
 1. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
+   ```
 
 2. **Install and setup Ollama:**
     Intall ollama from `[ollama.com](https://ollama.com/)`
