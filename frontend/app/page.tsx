@@ -24,7 +24,7 @@ export default function Home() {
         </div>
         
         <footer className="text-center mt-4 text-sm text-gray-500">
-          Powered by Ollama • Privacy-first • No API keys required
+          Local Ollama LLM
         </footer>
       </div>
     </div>
