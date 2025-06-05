@@ -69,6 +69,12 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
     npm run dev
     ```
 
+    Frontend is running if you see output:
+    ```bash
+        - Local:        http://localhost:3000
+        - Environments: .env.local
+    ```
+
     Open [http://localhost:3000](http://localhost:3000)
 
     Tip: 
