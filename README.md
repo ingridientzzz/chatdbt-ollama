@@ -11,20 +11,20 @@ This is the backend service for ChatDBT that uses Ollama for local LLM inference
 
 2. **Install and setup Ollama:**
 
-    Intall ollama from [ollama.com](https://ollama.com/)
-
-    Pull the required models
-    ```bash
-    ollama pull qwen3:4b          # or mistral, codellama, etc.
-    ollama pull nomic-embed-text  # for embeddings
-    ```
+    Install ollama from [ollama.com](https://ollama.com/)
 
     Start ollama server:
     ```bash
     ollama serve
     ```
 
-    Note: Thinking models like `qwen3:4b` are good since it provides a summary of its thought process arriving at that answer to prompt
+    In other CLI prompt, pull the required models
+    ```bash
+    ollama pull qwen3:4b          # or mistral, codellama, etc.
+    ollama pull nomic-embed-text  # for embeddings
+    ```
+
+    Note: Thinking models like `qwen3:4b` are good since they include trail of thought and we can see how they arrived at that answer to prompt
 
 3. **Set environment variables:**
     Create `.env` file in `/backend` by copying `.env.example`
