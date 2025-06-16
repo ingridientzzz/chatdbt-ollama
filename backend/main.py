@@ -91,13 +91,13 @@ def initialize_llama_index():
         
         # Create chat engine
         chat_engine = CondensePlusContextChatEngine.from_defaults(
-            index.as_retriever(similarity_top_k=5),
+            index.as_retriever(similarity_top_k=10),
             system_message=(
                 "You are a helpful assistant specialized in dbt (data build tool) projects. "
                 "You can help users understand their data models, transformations, and documentation. "
                 "When answering questions, provide specific information about the dbt models, "
                 "their relationships, and how they transform data. "
-                "If you reference specific files or models, mention their names clearly."
+                "If you reference specific tables, models, or sources, mention their names clearly."
             )
         )
         
@@ -151,8 +151,10 @@ async def chat(message: ChatMessage):
         sources = []
         if hasattr(response, 'source_nodes'):
             for node in response.source_nodes:
-                if hasattr(node, 'metadata') and 'file_path' in node.metadata:
-                    sources.append(node.metadata['file_path'])
+                # .get() for safer access to the metadata dictionary
+                file_path = node.metadata.get('file_path')
+                if file_path:
+                    sources.append(file_path)
         
         return ChatResponse(
             response=str(response),
@@ -185,13 +187,13 @@ async def refresh_index():
         
         # Recreate chat engine
         chat_engine = CondensePlusContextChatEngine.from_defaults(
-            index.as_retriever(similarity_top_k=5),
+            index.as_retriever(similarity_top_k=10),
             system_message=(
                 "You are a helpful assistant specialized in dbt (data build tool) projects. "
                 "You can help users understand their data models, transformations, and documentation. "
                 "When answering questions, provide specific information about the dbt models, "
                 "their relationships, and how they transform data. "
-                "If you reference specific files or models, mention their names clearly."
+                "If you reference specific tables, models, or sources, mention their names clearly."
             )
         )
         
